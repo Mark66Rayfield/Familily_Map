@@ -1,0 +1,35 @@
+---
+title: "Family_Map"
+author: "Mark Rayfield"
+date: "24 September 2020"
+output: ioslides_presentation
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+```
+
+## Where is my familiy in Australia?
+
+Hint: Look for 2 locations in Perth and 2 in Melbourne. Find the pop ups for more info. 
+``` {r familiy_map, eval=TRUE, echo = FALSE, warnings = FALSE, message = FALSE}
+library(leaflet)
+# stock png files (mapicons.zip) need to be in working directory
+FlagIcon <- iconList( 
+    home = makeIcon("house.png", 24, 24),
+    uni  = makeIcon("university.png", 20,20)
+)
+
+OzPlaces <- data.frame(name = c("Our House", "Kid 1 - Curtin Uni", "Kid 2 - RMIT", 
+                                "Kid 3 -Uni Mel"),
+                        lat = c(-32.0450072, -32.0079338, -37.8060731, -37.7980343),
+                        lng = c(115.7580142, 115.8954282, 144.9643062, 144.9600724),
+                        place = c("home", "uni", "uni", "uni"))
+invisible(as.factor(OzPlaces$place))
+OzPlaces %>% 
+  leaflet() %>%
+  addTiles() %>%
+  addMarkers(icon = ~FlagIcon[place], popup = ~name)
+```
+
+
